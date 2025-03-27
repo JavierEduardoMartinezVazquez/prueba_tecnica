@@ -19,4 +19,5 @@ Route::get('/tasks', [TaskController::class, 'showAllTask']);
 Route::get('/tasks/{id}', [TaskController::class, 'showTask']);
 Route::post('/tasks', [TaskController::class, 'storeTask']);
 Route::put('/tasks/{id}', [TaskController::class, 'updateTask']);
+Route::put('/tasks/{id}', [TaskController::class, 'updateAloneValTask']);
 Route::delete('/tasks/{id}', [TaskController::class, 'deleteTask']);

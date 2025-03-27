@@ -127,7 +127,48 @@ class TaskController extends Controller
         $task->save();
 
         $data = [
-                'mensaje' => 'Todos los datos son requeridos ',
+                'mensaje' => 'Tarea actualizada',
+                'task' => $task,
+                'status' => '200'
+        ];
+        return response()->json($data, 200);
+
+    }
+
+    public function updateAloneValTask(Request $request, $id){
+        $task = Task::find($id);
+        if(!$task){
+            $data = [
+                'mensaje' => 'Tarea no encontradaa',
+                'status' => '404'
+            ];
+            return response()->json($data, 404);
+        }
+        $validator = Validator::make($request->all(),[
+            'status'=>'in:Pendiente,En proceso,Completada'
+        ]);
+        if ($validator->fails()){
+            $data= [
+                'mensaje' => 'Error',
+                'errors' => $validator->errors(),
+                'status' => '400'
+            ];
+            return response()->json($data, 400);
+        }
+        if ($request->has('title')){
+            $task -> title = $request->title;
+        }
+        if ($request->has('description')){
+            $task -> description = $request->description;
+        }
+        if ($request->has('status')){
+            $task -> status = $request->status;
+        }
+
+        $task->save();
+
+        $data = [
+                'mensaje' => 'Tarea actualizada',
                 'task' => $task,
                 'status' => '200'
         ];
